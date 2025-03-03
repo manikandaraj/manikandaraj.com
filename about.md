@@ -4,10 +4,6 @@ date: 2025-03-01T01:30:00-05:00
 lastmod: 2025-03-01T01:30:00-05:00
 #menu: "main"
 #weight: 50
-
-# you can close something for this content if you open it in config.toml.
-comment: false
-mathjax: false
 ---
 
 # About Me
