@@ -1,3 +1,11 @@
+---
+title: "Creating Hugo Theme : A Comprehensive Guide"
+date: 2025-03-02T11:30:00-05:00
+lastmod: 2025-03-02T11:30:00-05:00
+#menu: "main"
+#weight: 50
+
+---
 # Creating Hugo Themes: A Comprehensive Guide
 
 *Based on tutorials and live workshops from Hugo experts*
