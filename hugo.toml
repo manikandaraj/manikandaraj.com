@@ -1,0 +1,84 @@
+# Configuration file for Hugo Site
+# Author : Manikandaraj Srinivasan
+# Reference : https://gohugo.io/configuration/all/
+
+baseURL = 'https://www.mscorplabs.com/'
+languageCode = 'en-us'
+defaultContentLanguage = 'en'
+title = 'Manikandaraj Srinivasan'
+titleCaseStyle = 'ap'
+
+# Which theme to use
+theme = 'mango'
+
+#Whether to disable injection of a <meta name="generator"> tag into the home page. Default is false
+disableHugoGeneratorInject = true
+
+#Whether to allow emoji in Markdown
+enableEmoji = true
+
+#Whether to enable generation of a robots.txt file
+enableRobotsTXT = true
+
+#Menu Configuration for Header
+[menus]
+    [[menus.main]]
+        name = 'Home'
+        identifier = 'home'
+        pageRef = '/'
+        weight = 10
+    [[menus.main]]
+        name = 'About'
+        identifier = 'about'
+        pageRef = '/about'
+        weight = 20
+    [[menus.main]]
+        name = 'Contact'
+        identifier = 'contact'
+        pageRef = '/contact'
+        weight = 30
+    [[menus.main]]
+        name = 'Blog'
+        identifier = 'blog'
+        pageRef = '/blog'
+        weight = 40
+    [[menus.main]]
+        name = 'My Resume'
+        identifier = 'resume'
+        pageRef = '/resume'
+        weight = 50
+    [[menus.main]]
+        name = 'Referrals'
+        identifier = 'referrals'
+        pageRef = '/referrals'
+        weight = 60
+    [[menus.main]]
+        name = 'My Projects'
+        identifier = 'projects'
+        pageRef = '/projects'
+        weight = 70
+
+[params]
+    #For referring in Blog Posts, Copyright Message
+    author.name = "Manikandaraj Srinivasan"
+    author.email = "matrix@manikandaraj.com"
+
+    #For SEO
+    keywords = ["Mani", "Manikandaraj","Srinivasan", "blog", "techonlogy" , "Machine Learning", "Artificial Intelligence", "Python", "Java", "C++", "Linux"]
+    description = "My Tech Blog - Manikandaraj Srinivasan!"
+
+    [params.social]
+        a-email = "mailto:matrix@manikandaraj.com"
+        b-stack-overflow = "https://stackoverflow.com/users/1430572/manikandaraj-srinivasan"
+        c-twitter = "https://x.com/manikandaraj"
+        d-facebook = "http://localhost:1313"
+        e-linkedin = "https://www.linkedin.com/in/manikandaraj/"
+        f-google = "http://localhost:1313"
+        g-github = "https://github.com/manikandaraj/"
+        m-instagram = "http://localhost:1313"
+        n-gitlab = "https://gitlab.com/Manikandaraj"
+        o-goodreads = "http://localhost:1313"
+        t-youtube = "http://localhost:1313"
+
+#Whether to print template execution improvement hints to the console
+templateMetrics = true

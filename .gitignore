@@ -1,0 +1,27 @@
+# Hugo build output
+/public/
+/resources/
+
+# Hugo lock file
+.hugo_build.lock
+
+# Local configuration files (optional)
+config.local.toml
+config.local.yaml
+config.local.json
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Node modules (if using Hugo Pipes with Node, etc.)
+node_modules/
+
+# Editor temporary files
+*.swp
+*~
+
+# Logs
+*.log
+log.txt
+err.txt
