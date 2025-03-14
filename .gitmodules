@@ -1,0 +1,6 @@
+[submodule "content"]
+	path = content
+	url = git@github.com:manikandaraj/manikandaraj.git
+[submodule "themes/mango"]
+	path = themes/mango
+	url = git@github.com:manikandaraj/mango.git
