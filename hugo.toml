@@ -25,37 +25,37 @@ enableRobotsTXT = true
     [[menus.main]]
         name = 'Home'
         identifier = 'home'
-        pageRef = '/'
+        url = '/'
         weight = 10
     [[menus.main]]
         name = 'About'
         identifier = 'about'
-        pageRef = '/about'
+        url = '/about'
         weight = 20
     [[menus.main]]
         name = 'Contact'
         identifier = 'contact'
-        pageRef = '/contact'
+        url = '/contact'
         weight = 30
     [[menus.main]]
         name = 'Blog'
         identifier = 'blog'
-        pageRef = '/blog'
+        url = '/blog'
         weight = 40
     [[menus.main]]
         name = 'My Resume'
         identifier = 'resume'
-        pageRef = '/resume'
+        url = '/resume'
         weight = 50
     [[menus.main]]
         name = 'Referrals'
         identifier = 'referrals'
-        pageRef = '/referrals'
+        url = '/referrals'
         weight = 60
     [[menus.main]]
         name = 'My Projects'
         identifier = 'projects'
-        pageRef = '/projects'
+        url = '/projects'
         weight = 70
 
 [params]
@@ -66,6 +66,8 @@ enableRobotsTXT = true
     #For SEO
     keywords = ["Mani", "Manikandaraj","Srinivasan", "blog", "techonlogy" , "Machine Learning", "Artificial Intelligence", "Python", "Java", "C++", "Linux"]
     description = "My Tech Blog - Manikandaraj Srinivasan!"
+
+    dateFormatToUse = "Jan 02, 2006"
 
     [params.social]
         a-email = "mailto:matrix@manikandaraj.com"
