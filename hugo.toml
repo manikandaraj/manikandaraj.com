@@ -2,7 +2,7 @@
 # Author : Manikandaraj Srinivasan
 # Reference : https://gohugo.io/configuration/all/
 
-baseURL = 'https://www.mscorplabs.com/'
+baseURL = 'https://www.manikandaraj.com/'
 languageCode = 'en-us'
 defaultContentLanguage = 'en'
 title = 'Manikandaraj Srinivasan'
@@ -30,32 +30,32 @@ enableRobotsTXT = true
     [[menus.main]]
         name = 'About'
         identifier = 'about'
-        url = '/about'
+        url = '/about/index.html'
         weight = 20
     [[menus.main]]
         name = 'Contact'
         identifier = 'contact'
-        url = '/contact'
+        url = '/contact/index.html'
         weight = 30
     [[menus.main]]
         name = 'Blog'
         identifier = 'blog'
-        url = '/blog'
+        url = '/blog/index.html'
         weight = 40
     [[menus.main]]
         name = 'My Resume'
-        identifier = 'resume'
-        url = '/resume'
+        identifier = 'resume/'
+        url = '/resume/index.html'
         weight = 50
     [[menus.main]]
         name = 'Referrals'
         identifier = 'referrals'
-        url = '/referrals'
+        url = '/referrals/index.html'
         weight = 60
     [[menus.main]]
         name = 'My Projects'
         identifier = 'projects'
-        url = '/projects'
+        url = '/projects/index.html'
         weight = 70
 
 [params]
@@ -70,17 +70,17 @@ enableRobotsTXT = true
     dateFormatToUse = "Jan 02, 2006"
 
     [params.social]
-        a-email = "mailto:matrix@manikandaraj.com"
-        b-stack-overflow = "https://stackoverflow.com/users/1430572/manikandaraj-srinivasan"
-        c-twitter = "https://x.com/manikandaraj"
-        d-facebook = "http://localhost:1313"
-        e-linkedin = "https://www.linkedin.com/in/manikandaraj/"
-        f-google = "http://localhost:1313"
-        g-github = "https://github.com/manikandaraj/"
-        m-instagram = "http://localhost:1313"
-        n-gitlab = "https://gitlab.com/Manikandaraj"
-        o-goodreads = "http://localhost:1313"
-        t-youtube = "http://localhost:1313"
+        email = "mailto:matrix@manikandaraj.com"
+        github = "https://github.com/manikandaraj/"
+        linkedin = "https://www.linkedin.com/in/manikandaraj/"
+        twitter = "https://x.com/manikandaraj"
+        stack-overflow = "https://stackoverflow.com/users/1430572/manikandaraj-srinivasan"
+        gitlab = "https://gitlab.com/Manikandaraj"
+        goodreads = "http://localhost:1313"
+        youtube = "http://localhost:1313"
+        google = "http://localhost:1313"
+        facebook = "http://localhost:1313"
+        instagram = "http://localhost:1313"
 
 #Whether to print template execution improvement hints to the console
 templateMetrics = true
