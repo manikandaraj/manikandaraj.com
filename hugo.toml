@@ -84,3 +84,9 @@ enableRobotsTXT = true
 
 #Whether to print template execution improvement hints to the console
 templateMetrics = true
+
+[markup]
+    [markup.goldmark]
+        [markup.goldmark.renderer]
+            unsafe = true
+
