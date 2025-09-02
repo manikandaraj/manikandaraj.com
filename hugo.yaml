@@ -141,7 +141,7 @@ params:
   
   # Fonts configuration (optional)
   fonts:
-    google: "Inter:wght@400;500;600;700"
+    google: "Inter:wght@300;400;500;600"
     primary: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif"
   
   # Contact form configuration
