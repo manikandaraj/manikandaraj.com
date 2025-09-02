@@ -1,7 +1,8 @@
 # File: .github/workflows/deploy.yml
 # Repository: manikandaraj.com (Main Repository)
+# OIDC Version - No AWS credentials stored in GitHub
 
-name: Deploy MANIKANDARAJ.COM to AWS
+name: Deploy MANIKANDARAJ.COM to AWS (OIDC)
 
 on:
   push:
@@ -14,6 +15,11 @@ env:
   HUGO_VERSION: 0.128.0
   AWS_REGION: us-east-1
   S3_BUCKET: manikandaraj.com
+  AWS_ROLE_ARN: arn:aws:iam::196179791908:role/ManikandarajComGitHubActionsRole
+
+permissions:
+  id-token: write   # Required for OIDC
+  contents: read    # Required for checkout
 
 jobs:
   deploy-manikandaraj:
@@ -26,52 +32,53 @@ jobs:
         submodules: recursive
         fetch-depth: 0
     
-    - name: Update MANIKANDARAJ.COM submodules to latest
+    - name: Update MANIKANDARJ.COM submodules to latest
       run: |
         git submodule update --remote --recursive
         git config --global user.email "action@github.com"
-        git config --global user.name "MANIKANDARAJ.COM GitHub Action"
+        git config --global user.name "MANIKANDARJ.COM GitHub Action"
         if [ -n "$(git status --porcelain)" ]; then
           git add .
           git commit -m "Update MANIKANDARJ.COM submodules to latest [skip ci]" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
         fi
     
-    - name: Setup Hugo for MANIKANDARAJ.COM
+    - name: Setup Hugo for MANIKANDARJ.COM
       uses: peaceiris/actions-hugo@v3
       with:
         hugo-version: ${{ env.HUGO_VERSION }}
         extended: true
     
-    - name: Build MANIKANDARAJ.COM Hugo site
+    - name: Build MANIKANDARJ.COM Hugo site
       run: hugo --minify
     
-    - name: Configure MANIKANDARAJ.COM AWS credentials
+    - name: Configure AWS credentials via OIDC
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        role-to-assume: ${{ env.AWS_ROLE_ARN }}
         aws-region: ${{ env.AWS_REGION }}
+        role-session-name: ManikandarajComDeployment
     
-    - name: Deploy MANIKANDARAJ.COM to S3
+    - name: Deploy MANIKANDARJ.COM to S3
       run: |
         aws s3 sync ./public/ s3://${{ env.S3_BUCKET }} --delete --cache-control "public, max-age=3600"
-        echo "✅ MANIKANDARAJ.COM deployed to S3 bucket: ${{ env.S3_BUCKET }}"
+        echo "✅ MANIKANDARJ.COM deployed to S3 bucket: ${{ env.S3_BUCKET }}"
     
-    - name: Invalidate MANIKANDARAJ.COM CloudFront cache
+    - name: Invalidate MANIKANDARJ.COM CloudFront cache
       run: |
         DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[0].DomainName=='${{ env.S3_BUCKET }}.s3.amazonaws.com'].Id" --output text)
         if [ -n "$DISTRIBUTION_ID" ] && [ "$DISTRIBUTION_ID" != "None" ]; then
           aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
-          echo "✅ MANIKANDARAJ.COM CloudFront cache invalidated for distribution: $DISTRIBUTION_ID"
+          echo "✅ MANIKANDARJ.COM CloudFront cache invalidated for distribution: $DISTRIBUTION_ID"
         else
           echo "ℹ️ No CloudFront distribution found for MANIKANDARJ.COM (deployment successful without CDN cache invalidation)"
         fi
     
-    - name: MANIKANDARAJ.COM Deployment Summary
+    - name: MANIKANDARJ.COM Deployment Summary
       run: |
-        echo "🚀 MANIKANDARAJ.COM deployment completed successfully!"
-        echo "📦 MANIKANDARAJ.COM deployed to: https://${{ env.S3_BUCKET }}"
+        echo "🚀 MANIKANDARJ.COM deployment completed successfully!"
+        echo "📦 MANIKANDARJ.COM deployed to: https://${{ env.S3_BUCKET }}"
         echo "⏰ Deployed at: $(date)"
         echo "📝 Commit: ${{ github.sha }}"
         echo "🏷️ Resource: RESOURCE_BIND=MANIKANDARJ.COM"
+        echo "🔐 Security: OIDC (No stored credentials)"
