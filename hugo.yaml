@@ -1,4 +1,4 @@
-baseURL: 'https://example.com'
+baseURL: 'https://manikandaraj.com'
 languageCode: 'en'
 title: "Manikandaraj Srinivasan's Tech Blog"
 
@@ -6,6 +6,8 @@ theme: mango
 
 # Enable emoji support
 enableEmoji: true
+
+uglyURLs: false  # Ensures clean URLs (this is default)
 
 # Copyright
 copyright: '© {CURRENT_YEAR} Manikandaraj Srinivasan. All rights reserved.'
