@@ -85,7 +85,7 @@ params:
   
   # Topics Configuration
   topics:
-    - name: "CERTIFICATION PREP"
+    - name: "CERT PREP"
       slug: "certification-prep"
       url: "/blog//certification-prep/"
       icon: "fas fa-certificate"
