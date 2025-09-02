@@ -2,6 +2,8 @@ baseURL: 'https://example.com'
 languageCode: 'en'
 title: "Manikandaraj Srinivasan's Tech Blog"
 
+theme: mango 
+
 # Enable emoji support
 enableEmoji: true
 
@@ -44,22 +46,22 @@ params:
   # Social Links Configuration
   social:
     - name: "GitHub"
-      url: "https://github.com/username"
+      url: "https://github.com/manikandaraj"
       icon: "fab fa-github"
     - name: "LinkedIn" 
-      url: "https://linkedin.com/in/username"
+      url: "https://linkedin.com/in/manikandaraj"
       icon: "fab fa-linkedin"
     - name: "Twitter"
-      url: "https://twitter.com/username"
+      url: "https://x.com/manikandaraj"
       icon: "fab fa-twitter"
     - name: "StackOverflow"
-      url: "https://stackoverflow.com/users/username"
+      url: "https://stackoverflow.com/users/1430572/manikandaraj-srinivasan"
       icon: "fab fa-stack-overflow"
     - name: "Email"
-      url: "mailto:contact@example.com"
+      url: "mailto:matrix@manikandaraj.com"
       icon: "fas fa-envelope"
     - name: "Website"
-      url: "https://example.com"
+      url: "https://manikandaraj.com"
       icon: "fas fa-globe"
   
   # Topics Configuration
@@ -147,7 +149,7 @@ menu:
       weight: 20
     - identifier: 'blog'
       name: 'Blog'
-      url: '/posts/'
+      url: '/blog/'
       weight: 30
     - identifier: 'contact'
       name: 'Contact'
