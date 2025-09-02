@@ -1,19 +1,36 @@
+# Configuration file for Hugo Site
+# Author : Manikandaraj Srinivasan
+# Reference : https://gohugo.io/configuration/all/
+
+
 baseURL: 'https://manikandaraj.com'
-languageCode: 'en'
-title: "Manikandaraj Srinivasan's Tech Blog"
+title: "Manikandaraj Srinivasan"
+languageCode: 'en-us'
+defaultContentLanguage: 'en'
+titleCaseStyle:  'ap'
 
 theme: mango 
 
-# Enable emoji support
-enableEmoji: true
+#Whether to disable injection of a <meta name="generator"> tag into the home page. Default is false
+disableHugoGeneratorInject:  true
 
-uglyURLs: false  # Ensures clean URLs (this is default)
+#Whether to allow emoji in Markdown
+enableEmoji:  true
+
+#Whether to enable generation of a robots.txt file
+enableRobotsTXT:  true
+
+#Ensure clean URLs
+uglyURLs: false  
 
 # Copyright
 copyright: '© {CURRENT_YEAR} Manikandaraj Srinivasan. All rights reserved.'
 
 # Date format
 dateFormatToUse: 'Jan 02, 2006'
+
+#Whether to print template execution improvement hints to the console
+templateMetrics:  true
 
 # Profile configuration
 profile_image: '/images/profile.jpg'
@@ -70,31 +87,31 @@ params:
   topics:
     - name: "CERTIFICATION PREP"
       slug: "certification-prep"
-      url: "/categories/certification-prep/"
+      url: "/blog//certification-prep/"
       icon: "fas fa-certificate"
     - name: "AWS"
       slug: "aws"
-      url: "/categories/aws/"
+      url: "/blog/aws/"
       icon: "fab fa-aws"
     - name: "AI/ML"
       slug: "ai-ml"
-      url: "/categories/ai-ml/"
+      url: "/blog/ai-ml/"
       icon: "fas fa-brain"
     - name: "Tech"
       slug: "tech"
-      url: "/categories/tech/"
+      url: "/blog/tech/"
       icon: "fas fa-code"
-    - name: "Finance"
-      slug: "finance"
-      url: "/categories/finance/"
-      icon: "fas fa-chart-line"
-    - name: "Personal"
-      slug: "personal"
-      url: "/categories/personal/"
-      icon: "fas fa-user"
+#    - name: "Finance"
+#      slug: "finance"
+#      url: "/blog/finance/"
+#      icon: "fas fa-chart-line"
+#    - name: "Personal"
+#      slug: "personal"
+#      url: "/blog/personal/"
+#      icon: "fas fa-user"
     - name: "Referrals"
       slug: "referrals"
-      url: "/categories/referrals/"
+      url: "/blog/referrals/"
       icon: "fas fa-handshake"
   
   # Footer configuration
@@ -129,7 +146,7 @@ params:
   
   # Contact form configuration
   contact:
-    api_endpoint: "https://formspree.io/f/YOUR_FORM_ID"  # Replace with your actual API endpoint
+    api_endpoint: "https://api.manikandaraj.com/f/YOUR_FORM_ID"  # Replace with your actual API endpoint
     success_message: "Thank you for your message! I'll get back to you soon."
     error_message: "Sorry, there was an error sending your message. Please try again."
   
