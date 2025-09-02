@@ -1,0 +1,85 @@
+# File: .github/workflows/rotate-aws-keys.yml
+# Repository: manikandaraj.com (Main Repository)
+
+name: Rotate MANIKANDARAJ.COM AWS Keys
+
+on:
+  schedule:
+    # Run every 90 days at 2 AM UTC
+    - cron: '0 2 */90 * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  rotate-manikandaraj-keys:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout MANIKANDARJ.COM repository
+      uses: actions/checkout@v4
+    
+    - name: Configure AWS credentials (MANIKANDARJ.COM rotation permissions)
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ROTATION_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_ROTATION_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    
+    - name: Create new MANIKANDARJ.COM access key
+      id: create-manikandaraj-key
+      run: |
+        # Create new access key for MANIKANDARJ.COM deployment user
+        NEW_KEY=$(aws iam create-access-key --user-name manikandaraj-com-github-actions --output json)
+        NEW_ACCESS_KEY_ID=$(echo $NEW_KEY | jq -r '.AccessKey.AccessKeyId')
+        NEW_SECRET_ACCESS_KEY=$(echo $NEW_KEY | jq -r '.AccessKey.SecretAccessKey')
+        
+        echo "new_access_key_id=$NEW_ACCESS_KEY_ID" >> $GITHUB_OUTPUT
+        echo "::add-mask::$NEW_SECRET_ACCESS_KEY"
+        echo "new_secret_access_key=$NEW_SECRET_ACCESS_KEY" >> $GITHUB_OUTPUT
+        
+        echo "✅ New MANIKANDARJ.COM access key created: $NEW_ACCESS_KEY_ID"
+    
+    - name: Update MANIKANDARJ.COM GitHub repository secrets
+      uses: gliech/create-github-secret-action@v1
+      with:
+        name: AWS_ACCESS_KEY_ID
+        value: ${{ steps.create-manikandaraj-key.outputs.new_access_key_id }}
+        pa_token: ${{ secrets.GH_PAT_TOKEN }}
+    
+    - name: Update MANIKANDARJ.COM GitHub repository secrets (Secret Key)
+      uses: gliech/create-github-secret-action@v1
+      with:
+        name: AWS_SECRET_ACCESS_KEY
+        value: ${{ steps.create-manikandaraj-key.outputs.new_secret_access_key }}
+        pa_token: ${{ secrets.GH_PAT_TOKEN }}
+    
+    - name: Wait for MANIKANDARJ.COM key propagation
+      run: sleep 60
+    
+    - name: Test new MANIKANDARJ.COM credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ steps.create-manikandaraj-key.outputs.new_access_key_id }}
+        aws-secret-access-key: ${{ steps.create-manikandaraj-key.outputs.new_secret_access_key }}
+        aws-region: us-east-1
+    
+    - name: Verify MANIKANDARJ.COM S3 access with new key
+      run: |
+        aws s3 ls s3://manikandarj.com || (echo "❌ MANIKANDARJ.COM new key verification failed" && exit 1)
+        echo "✅ MANIKANDARJ.COM new key verified successfully"
+    
+    - name: Delete old MANIKANDARJ.COM access key
+      run: |
+        # Switch back to rotation credentials to delete old key
+        export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ROTATION_ACCESS_KEY_ID }}"
+        export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_ROTATION_SECRET_ACCESS_KEY }}"
+        
+        OLD_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
+        aws iam delete-access-key --user-name manikandaraj-com-github-actions --access-key-id $OLD_ACCESS_KEY_ID
+        echo "🗑️ Old MANIKANDARJ.COM access key deleted: $OLD_ACCESS_KEY_ID"
+    
+    - name: MANIKANDARJ.COM key rotation notification
+      run: |
+        echo "🔄 MANIKANDARJ.COM AWS access keys rotated successfully on $(date)"
+        echo "📧 MANIKANDARJ.COM key rotation completed for website deployment"
+        echo "🏷️ Resource: RESOURCE_BIND=MANIKANDARJ.COM"
+        echo "🔑 New key: ${{ steps.create-manikandaraj-key.outputs.new_access_key_id }}"

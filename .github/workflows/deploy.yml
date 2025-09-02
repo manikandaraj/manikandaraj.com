@@ -1,4 +1,6 @@
-# .github/workflows/deploy.yml
+# File: .github/workflows/deploy.yml
+# Repository: manikandaraj.com (Main Repository)
+
 name: Deploy MANIKANDARAJ.COM to AWS
 
 on:
@@ -31,7 +33,7 @@ jobs:
         git config --global user.name "MANIKANDARAJ.COM GitHub Action"
         if [ -n "$(git status --porcelain)" ]; then
           git add .
-          git commit -m "Update MANIKANDARAJ.COM submodules to latest [skip ci]" || echo "No changes to commit"
+          git commit -m "Update MANIKANDARJ.COM submodules to latest [skip ci]" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
         fi
     
@@ -40,21 +42,6 @@ jobs:
       with:
         hugo-version: ${{ env.HUGO_VERSION }}
         extended: true
-    
-    - name: Setup Node.js (for MANIKANDARAJ.COM theme dependencies)
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: 'themes/mango/package-lock.json'
-      
-    - name: Install MANIKANDARAJ.COM theme dependencies
-      run: |
-        if [ -f "themes/mango/package.json" ]; then
-          cd themes/mango
-          npm ci
-          cd ../..
-        fi
     
     - name: Build MANIKANDARAJ.COM Hugo site
       run: hugo --minify
@@ -74,11 +61,11 @@ jobs:
     - name: Invalidate MANIKANDARAJ.COM CloudFront cache
       run: |
         DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[0].DomainName=='${{ env.S3_BUCKET }}.s3.amazonaws.com'].Id" --output text)
-        if [ -n "$DISTRIBUTION_ID" ]; then
+        if [ -n "$DISTRIBUTION_ID" ] && [ "$DISTRIBUTION_ID" != "None" ]; then
           aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
           echo "✅ MANIKANDARAJ.COM CloudFront cache invalidated for distribution: $DISTRIBUTION_ID"
         else
-          echo "⚠️  MANIKANDARAJ.COM CloudFront distribution not found for bucket: ${{ env.S3_BUCKET }}"
+          echo "ℹ️ No CloudFront distribution found for MANIKANDARJ.COM (deployment successful without CDN cache invalidation)"
         fi
     
     - name: MANIKANDARAJ.COM Deployment Summary
@@ -87,4 +74,4 @@ jobs:
         echo "📦 MANIKANDARAJ.COM deployed to: https://${{ env.S3_BUCKET }}"
         echo "⏰ Deployed at: $(date)"
         echo "📝 Commit: ${{ github.sha }}"
-        echo "🏷️ Resource: RESOURCE_BIND=MANIKANDARAJ.COM"
+        echo "🏷️ Resource: RESOURCE_BIND=MANIKANDARJ.COM"
