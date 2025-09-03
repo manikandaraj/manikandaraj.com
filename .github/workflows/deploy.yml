@@ -64,16 +64,19 @@ jobs:
         aws s3 sync ./public/ s3://${{ env.S3_BUCKET }} --delete --cache-control "public, max-age=3600"
         echo "✅ MANIKANDARAJ.COM deployed to S3 bucket: ${{ env.S3_BUCKET }}"
     
-    - name: Invalidate MANIKANDARAJ.COM CloudFront cache
+   - name: Invalidate MANIKANDARAJ.COM CloudFront cache
       run: |
         DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[0].DomainName=='${{ env.S3_BUCKET }}.s3.amazonaws.com'].Id" --output text)
+        if [ -z "$DISTRIBUTION_ID" ] || [ "$DISTRIBUTION_ID" = "None" ]; then
+          DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[0].DomainName=='${{ env.S3_BUCKET }}.s3.us-east-1.amazonaws.com'].Id" --output text)
+        fi
         if [ -n "$DISTRIBUTION_ID" ] && [ "$DISTRIBUTION_ID" != "None" ]; then
           aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
           echo "✅ MANIKANDARAJ.COM CloudFront cache invalidated for distribution: $DISTRIBUTION_ID"
         else
-          echo "ℹ️ No CloudFront distribution found for MANIKANDARAJ.COM (deployment successful without CDN cache invalidation)"
-        fi
-    
+          echo "ℹ️ No CloudFront distribution found for MANIKANDARJ.COM"
+        fi 
+
     - name: MANIKANDARAJ.COM Deployment Summary
       run: |
         echo "🚀 MANIKANDARAJ.COM deployment completed successfully!"
