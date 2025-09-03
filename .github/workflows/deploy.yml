@@ -64,7 +64,7 @@ jobs:
         aws s3 sync ./public/ s3://${{ env.S3_BUCKET }} --delete --cache-control "public, max-age=3600"
         echo "✅ MANIKANDARAJ.COM deployed to S3 bucket: ${{ env.S3_BUCKET }}"
     
-   - name: Invalidate MANIKANDARAJ.COM CloudFront cache
+    - name: Invalidate MANIKANDARAJ.COM CloudFront cache
       run: |
         DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[0].DomainName=='${{ env.S3_BUCKET }}.s3.amazonaws.com'].Id" --output text)
         if [ -z "$DISTRIBUTION_ID" ] || [ "$DISTRIBUTION_ID" = "None" ]; then
