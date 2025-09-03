@@ -32,24 +32,24 @@ jobs:
         submodules: recursive
         fetch-depth: 0
     
-    - name: Update MANIKANDARJ.COM submodules to latest
+    - name: Update MANIKANDARAJ.COM submodules to latest
       run: |
         git submodule update --remote --recursive
         git config --global user.email "action@github.com"
-        git config --global user.name "MANIKANDARJ.COM GitHub Action"
+        git config --global user.name "MANIKANDARAJ.COM GitHub Action"
         if [ -n "$(git status --porcelain)" ]; then
           git add .
-          git commit -m "Update MANIKANDARJ.COM submodules to latest [skip ci]" || echo "No changes to commit"
+          git commit -m "Update MANIKANDARAJ.COM submodules to latest [skip ci]" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
         fi
     
-    - name: Setup Hugo for MANIKANDARJ.COM
+    - name: Setup Hugo for MANIKANDARAJ.COM
       uses: peaceiris/actions-hugo@v3
       with:
         hugo-version: ${{ env.HUGO_VERSION }}
         extended: true
     
-    - name: Build MANIKANDARJ.COM Hugo site
+    - name: Build MANIKANDARAJ.COM Hugo site
       run: hugo --minify
     
     - name: Configure AWS credentials via OIDC
@@ -59,26 +59,26 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
         role-session-name: ManikandarajComDeployment
     
-    - name: Deploy MANIKANDARJ.COM to S3
+    - name: Deploy MANIKANDARAJ.COM to S3
       run: |
         aws s3 sync ./public/ s3://${{ env.S3_BUCKET }} --delete --cache-control "public, max-age=3600"
-        echo "✅ MANIKANDARJ.COM deployed to S3 bucket: ${{ env.S3_BUCKET }}"
+        echo "✅ MANIKANDARAJ.COM deployed to S3 bucket: ${{ env.S3_BUCKET }}"
     
-    - name: Invalidate MANIKANDARJ.COM CloudFront cache
+    - name: Invalidate MANIKANDARAJ.COM CloudFront cache
       run: |
         DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[0].DomainName=='${{ env.S3_BUCKET }}.s3.amazonaws.com'].Id" --output text)
         if [ -n "$DISTRIBUTION_ID" ] && [ "$DISTRIBUTION_ID" != "None" ]; then
           aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
-          echo "✅ MANIKANDARJ.COM CloudFront cache invalidated for distribution: $DISTRIBUTION_ID"
+          echo "✅ MANIKANDARAJ.COM CloudFront cache invalidated for distribution: $DISTRIBUTION_ID"
         else
-          echo "ℹ️ No CloudFront distribution found for MANIKANDARJ.COM (deployment successful without CDN cache invalidation)"
+          echo "ℹ️ No CloudFront distribution found for MANIKANDARAJ.COM (deployment successful without CDN cache invalidation)"
         fi
     
-    - name: MANIKANDARJ.COM Deployment Summary
+    - name: MANIKANDARAJ.COM Deployment Summary
       run: |
-        echo "🚀 MANIKANDARJ.COM deployment completed successfully!"
-        echo "📦 MANIKANDARJ.COM deployed to: https://${{ env.S3_BUCKET }}"
+        echo "🚀 MANIKANDARAJ.COM deployment completed successfully!"
+        echo "📦 MANIKANDARAJ.COM deployed to: https://${{ env.S3_BUCKET }}"
         echo "⏰ Deployed at: $(date)"
         echo "📝 Commit: ${{ github.sha }}"
-        echo "🏷️ Resource: RESOURCE_BIND=MANIKANDARJ.COM"
+        echo "🏷️ Resource: RESOURCE_BIND=MANIKANDARAJ.COM"
         echo "🔐 Security: OIDC (No stored credentials)"
