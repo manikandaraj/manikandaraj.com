@@ -85,9 +85,9 @@ params:
   
   # Topics Configuration
   topics:
-    - name: "CERT PREP"
+    - name: "CERTIFICATION PREP"
       slug: "certification-prep"
-      url: "/blog//certification-prep/"
+      url: "/blog/certification-prep/"
       icon: "fas fa-certificate"
     - name: "AWS"
       slug: "aws"
@@ -97,10 +97,6 @@ params:
       slug: "ai-ml"
       url: "/blog/ai-ml/"
       icon: "fas fa-brain"
-    - name: "Tech"
-      slug: "tech"
-      url: "/blog/tech/"
-      icon: "fas fa-code"
     - name: "FinTech"
       slug: "fintech"
       url: "/blog/fintech/"
@@ -177,7 +173,7 @@ menu:
 
 # Permalink configuration
 permalinks:
-  posts: '/:year/:month/:title/'
+  blog: '/:year/:month/:title/'
 
 # Pagination
 pagination:
